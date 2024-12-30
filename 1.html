@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposta Interativa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(to right, #f5b3c1, #ffcccb);
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+      flex-direction: column;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 20vw;
+      margin-top: 20px;
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 6vw;
+      margin-bottom: 4vw;
+      font-weight: 700;
+      color: #ff66b2;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn {
+      padding: 1.5em 3em;
+      font-size: 3vw;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 25px;
+      position: relative;
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.2s ease-in-out;
+    }
+
+    .btn-sim {
+      background-color: #ff66b2;
+      box-shadow: 0 10px 20px rgba(255, 102, 178, 0.5);
+    }
+
+    .btn-nao {
+      background-color: #ff4d94;
+      box-shadow: 0 10px 20px rgba(255, 77, 148, 0.5);
+    }
+
+    .mensagem {
+      font-family: 'Roboto', sans-serif;
+      font-size: 2.5vw;
+      margin-top: 20px;
+      color: #fff;
+      display: none;
+      font-weight: 500;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <h1>Larrisa, ainda vamos continuar saindo?</h1>
+  <div class="container">
+    <button class="btn btn-sim" id="btnSim" onclick="mostrarMensagem(true)">Sim</button>
+    <button class="btn btn-nao" id="btnNao" onclick="mostrarMensagem(false)" disabled>Não</button>
+  </div>
+  <div id="mensagem" class="mensagem">
+    <p id="resultado"></p>
+  </div>
+
+  <script>
+    function mostrarMensagem(isSim) {
+      const mensagemDiv = document.getElementById('mensagem');
+      const resultado = document.getElementById('resultado');
+      const btnNao = document.getElementById('btnNao');
+      
+      if (isSim) {
+        resultado.textContent = "Envie sua resposta para o número 12981347292(pode ser pelo o instagram também)";
+        btnNao.style.display = 'none';
+      } else {
+        resultado.textContent = "Vamos tentar mais uma vez!";
+      }
+      mensagemDiv.style.display = 'block';
+    }
+
+    function moverBotao(mouseX, mouseY) {
+      const btnNao = document.getElementById('btnNao');
+      const larguraTela = window.innerWidth;
+      const alturaTela = window.innerHeight;
+      const larguraBotao = btnNao.offsetWidth;
+      const alturaBotao = btnNao.offsetHeight;
+
+      const distanciaSeguranca = 50;
+
+      const centroBotaoX = larguraTela / 2;
+      const centroBotaoY = alturaTela / 2;
+
+      const deltaX = mouseX - centroBotaoX;
+      const deltaY = mouseY - centroBotaoY;
+
+      let novaPosX = larguraTela - larguraBotao - distanciaSeguranca;
+      let novaPosY = alturaTela - alturaBotao - distanciaSeguranca;
+
+      if (deltaX > 0) {
+        novaPosX = larguraTela - larguraBotao - distanciaSeguranca;
+      } else {
+        novaPosX = distanciaSeguranca;
+      }
+
+      if (deltaY > 0) {
+        novaPosY = alturaTela - alturaBotao - distanciaSeguranca;
+      } else {
+        novaPosY = distanciaSeguranca;
+      }
+
+      btnNao.style.left = `${novaPosX}px`;
+      btnNao.style.top = `${novaPosY}px`;
+      btnNao.style.visibility = 'visible';
+    }
+
+    function verificarProximidade(event) {
+      const mouseX = event.clientX;
+      const mouseY = event.clientY;
+
+      moverBotao(mouseX, mouseY);
+    }
+
+    document.addEventListener('mousemove', verificarProximidade);
+  </script>
+</body>
+</html>
